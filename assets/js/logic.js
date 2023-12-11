@@ -22,11 +22,12 @@ startBtn.addEventListener('click', function () {
 //code for the timer
 let timeLeft = 60;
 timer.textContent = timeLeft;
-const startTimer = function () {
-    setInterval(() => {
+let startTimer = function () {
+    intervalId = setInterval(() => {
         if (timeLeft > 0) {
             timeLeft--;
             timer.textContent = timeLeft;
+            console.log("funcion time left is", timeLeft);
         } else {
             endQuiz();
         }
@@ -35,9 +36,10 @@ const startTimer = function () {
 
 //code to display the question
 let currentQuestionindex = 0;
+
 const questionDisplay = function () {
+
     const currentQuestion = quizQuestions[currentQuestionindex];
-    questionsContainer.textContent = '';
     questionTitle.textContent = currentQuestion.question;
 
     // loop for quiz buttons 
@@ -45,48 +47,66 @@ const questionDisplay = function () {
         const choicesBtn = document.createElement('button');
         choicesBtn.classList.add('button');
         choicesBtn.textContent = currentQuestion.choices[i];
-        choicesBtn.addEventListener('click', () => chcekAnswer(i));
         questionChoices.appendChild(choicesBtn);
+        choicesBtn.addEventListener('click', () => chcekAnswer(i));
     };
 }
 
 // code to check the correct answer 
 
 const chcekAnswer = function (userClick) {
+    
     const currentQuestion = quizQuestions[currentQuestionindex];
 
     if (userClick === currentQuestion.correctAns) {
-        const correctFeedback = document.createElement('p');
-        correctFeedback.textContent = 'Correct Answer!';
-        feedback.appendChild(correctFeedback);
-        feedback.classList.remove('hide');
+        displayFeedback('Correct Answer!✅');
+        
     } else {
-        const wrongFeedback = document.createElement('p');
-        wrongFeedback.textContent = 'Wrong Answer :((';
-        feedback.appendChild(wrongFeedback);
-        feedback.classList.remove('hide');
+        displayFeedback('Wrong Answer ❌');
         timeLeft -= 20;
     }
 
     currentQuestionindex++;
 
-    if (currentQuestionindex < questions.length) {
+    if (currentQuestionindex < quizQuestions.length) {
+        questionChoices.textContent = '';
         questionDisplay();
       } else {
         endQuiz();
       }
-}
 
-// code to move to the next question
+};
+
+const displayFeedback = function(message){
+    feedback.textContent = message;
+    feedback.classList.remove('hide');
+    setTimeout(() => {
+        feedback.classList.add('hide');
+    }, 400);
+};
+
 
 // code to end the quiz
-let score = 0;
+// let score = timeLeft;
+// console.log(score);
+
 const endQuiz = function () {
-    clearInterval(timer);
+    clearInterval(intervalId);
+    // let score = timeLeft;
+    // finalScore.textContent = score;
+    // console.log(score);
+    // console.log(timeLeft);
     questionsContainer.classList.add('hide');
     endScreen.classList.remove('hide');
-    finalScore.textContent = score;
+    feedback.classList.add('hide');
+
+    // score = Math.max(0, timeLeft);
+
+    // // Update the timer display one final time
+    // timer.textContent = timeLeft;
+
+    // finalScore.textContent = score;
+
 }
 
 // code to get initals and save
-
