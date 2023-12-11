@@ -14,10 +14,12 @@ const feedback = document.getElementById('feedback');
 startBtn.addEventListener('click', function () {
     startBtn.classList.add('hide');
     startScreen.classList.add('hide');
+    startTimer();
+    questionDisplay();
 });
 
 //code for the timer
-const timeLeft = 60;
+let timeLeft = 60;
 timer.textContent = timeLeft;
 const startTimer = function () {
     setInterval(() => {
@@ -27,20 +29,61 @@ const startTimer = function () {
             endQuiz();
         }
     }, 1000);
-}
+};
 //code to display the question
-
+let currentQuestionindex = 0;
 const questionDisplay = function () {
     questionsContainer.textContent = '';
 
+
+    // loop for quiz quesions
     for (let i = 0; i < quizQuestions.length; i++) {
         const currentQuestion = quizQuestions[i];
         questionTitle.textContent = currentQuestion.question;
-        const choicesBtn = document.createElement('button');
-        choicesBtn.textContent = currentQuestion.choices
+
 
     }
+
+    // loop for quiz buttons 
+    for (let i = 0; i < questionsContainer.choices.length; i++) {
+        const choicesBtn = document.createElement('button');
+        choicesBtn.textContent = currentQuestion.choices[i];
+        choicesBtn.addEventListener('click', () => chcekAnswer(i));
+        questionChoices.appendChild(choicesBtn);
+    };
 }
+
+// code to check the correct answer 
+
+const chcekAnswer = function (userClick) {
+    const currentQuestion = quizQuestions[currentQuestionindex];
+
+    if (userClick === currentQuestion.correctAns) {
+        const correctFeedback = document.createElement('p');
+        correctFeedback.textContent = 'Correct Answer!';
+        feedback.appendChild(correctFeedback);
+        feedback.classList.remove('hide');
+    } else {
+        const wrongFeedback = document.createElement('p');
+        correctFeedback.textContent = 'Wrong Answer :((';
+        feedback.appendChild(wrongFeedback);
+        feedback.classList.remove('hide');
+        timeLeft -= 20;
+    }
+    
+    currentQuestionindex++;
+
+    if (currentQuestionindex < questions.length) {
+        displayQuestion();
+      } else {
+        endQuiz();
+      }
+}
+
+// feedback code
+
+
+
 
 // code to move to the next question
 
