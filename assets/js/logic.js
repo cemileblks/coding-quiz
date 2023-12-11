@@ -14,6 +14,7 @@ const feedback = document.getElementById('feedback');
 startBtn.addEventListener('click', function () {
     startBtn.classList.add('hide');
     startScreen.classList.add('hide');
+    questionsContainer.classList.remove('hide');
     startTimer();
     questionDisplay();
 });
@@ -25,28 +26,24 @@ const startTimer = function () {
     setInterval(() => {
         if (timeLeft > 0) {
             timeLeft--;
+            timer.textContent = timeLeft;
         } else {
             endQuiz();
         }
     }, 1000);
 };
+
 //code to display the question
 let currentQuestionindex = 0;
 const questionDisplay = function () {
+    const currentQuestion = quizQuestions[currentQuestionindex];
     questionsContainer.textContent = '';
-
-
-    // loop for quiz quesions
-    for (let i = 0; i < quizQuestions.length; i++) {
-        const currentQuestion = quizQuestions[i];
-        questionTitle.textContent = currentQuestion.question;
-
-
-    }
+    questionTitle.textContent = currentQuestion.question;
 
     // loop for quiz buttons 
-    for (let i = 0; i < questionsContainer.choices.length; i++) {
+    for (let i = 0; i < currentQuestion.choices.length; i++) {
         const choicesBtn = document.createElement('button');
+        choicesBtn.classList.add('button');
         choicesBtn.textContent = currentQuestion.choices[i];
         choicesBtn.addEventListener('click', () => chcekAnswer(i));
         questionChoices.appendChild(choicesBtn);
@@ -65,25 +62,20 @@ const chcekAnswer = function (userClick) {
         feedback.classList.remove('hide');
     } else {
         const wrongFeedback = document.createElement('p');
-        correctFeedback.textContent = 'Wrong Answer :((';
+        wrongFeedback.textContent = 'Wrong Answer :((';
         feedback.appendChild(wrongFeedback);
         feedback.classList.remove('hide');
         timeLeft -= 20;
     }
-    
+
     currentQuestionindex++;
 
     if (currentQuestionindex < questions.length) {
-        displayQuestion();
+        questionDisplay();
       } else {
         endQuiz();
       }
 }
-
-// feedback code
-
-
-
 
 // code to move to the next question
 
