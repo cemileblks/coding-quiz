@@ -47,7 +47,7 @@ const questionDisplay = function () {
         choicesBtn.classList.add('button');
         choicesBtn.textContent = currentQuestion.choices[i];
         questionChoices.appendChild(choicesBtn);
-        choicesBtn.addEventListener('click', checkAnswer());
+        choicesBtn.addEventListener('click', () => checkAnswer(i));
     };
 }
 
@@ -56,7 +56,7 @@ const questionDisplay = function () {
 const checkAnswer = function (userClick) {
     
     const currentQuestion = quizQuestions[currentQuestionindex];
-    console.log(currentQuestion);
+
     if (userClick === currentQuestion.correctAns) {
         displayFeedback('Correct Answer!✅');
         
