@@ -124,7 +124,7 @@ submitBtn.addEventListener('click', function () {
 
         window.location.href = 'highscores.html';
     } else {
-        alert('Please enter your initials.');
+        alert('Please write your initials to save your result');
     }
 });
 
