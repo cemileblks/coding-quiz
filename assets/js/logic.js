@@ -6,7 +6,7 @@ const questionTitle = document.getElementById('question-title');
 const questionChoices = document.getElementById('choices'); // this is a div
 const endScreen = document.getElementById('end-screen');
 const finalScore = document.getElementById('final-score');
-const initialsofQuiztaker = document.getElementById('initials');
+const initialsInput = document.getElementById('initials');
 const submitBtn = document.getElementById('submit');
 const feedback = document.getElementById('feedback');
 
@@ -73,7 +73,7 @@ const chcekAnswer = function (userClick) {
         questionChoices.textContent = '';
         questionDisplay();
       } else {
-        endQuiz();
+        setTimeout(endQuiz, 800); // added delay so that feedback for the last question is visible to the user
       }
 
 };
@@ -89,15 +89,10 @@ const displayFeedback = function(message){
 
 
 // code to end the quiz
-// let score = timeLeft;
-// console.log(score);
 
 const endQuiz = function () {
     clearInterval(intervalId);
-    // let score = timeLeft;
-    // finalScore.textContent = score;
-    // console.log(score);
-    // console.log(timeLeft);
+
     finalScore.textContent = timeLeft;
 
     questionsContainer.classList.add('hide');
@@ -106,7 +101,31 @@ const endQuiz = function () {
 
     timer.textContent = timeLeft; // update the timer with final time
 
-    
 }
 
-// code to get initals and save
+
+submitBtn.addEventListener('click', function () {
+    const initials = initialsInput.value.trim();
+
+    if (initials !== '') {
+        const newScore = {
+            initials: initials,
+            score: timeLeft
+        };
+
+        // get all high scores from local storage
+        const highscoresFromStorage = JSON.parse(localStorage.getItem('highscores')) || [];
+
+        // Add the new score to the array
+        highscoresFromStorage.push(newScore);
+
+        // save the updated high scores back to local storage
+        localStorage.setItem('highscores', JSON.stringify(highscoresFromStorage));
+
+        window.location.href = 'highscores.html';
+    } else {
+        alert('Please enter your initials.');
+    }
+});
+
+console.log(window);
