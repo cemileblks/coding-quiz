@@ -36,7 +36,6 @@ let startTimer = function () {
 
 //code to display the question
 let currentQuestionindex = 0;
-
 const questionDisplay = function () {
 
     const currentQuestion = quizQuestions[currentQuestionindex];
@@ -63,7 +62,9 @@ const chcekAnswer = function (userClick) {
         
     } else {
         displayFeedback('Wrong Answer ❌');
-        timeLeft -= 20;
+        
+        timeLeft -= 15;
+        timeLeft = Math.max(0, timeLeft); //if user gets all wrong to prevent timer displaying negative
     }
 
     currentQuestionindex++;
@@ -77,12 +78,13 @@ const chcekAnswer = function (userClick) {
 
 };
 
+
 const displayFeedback = function(message){
     feedback.textContent = message;
     feedback.classList.remove('hide');
     setTimeout(() => {
         feedback.classList.add('hide');
-    }, 400);
+    }, 450);
 };
 
 
@@ -96,17 +98,15 @@ const endQuiz = function () {
     // finalScore.textContent = score;
     // console.log(score);
     // console.log(timeLeft);
+    finalScore.textContent = timeLeft;
+
     questionsContainer.classList.add('hide');
     endScreen.classList.remove('hide');
     feedback.classList.add('hide');
 
-    // score = Math.max(0, timeLeft);
+    timer.textContent = timeLeft; // update the timer with final time
 
-    // // Update the timer display one final time
-    // timer.textContent = timeLeft;
-
-    // finalScore.textContent = score;
-
+    
 }
 
 // code to get initals and save
