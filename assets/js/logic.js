@@ -52,6 +52,8 @@ const questionDisplay = function () {
 }
 
 // code to check the correct answer 
+const correctAudio = new Audio('assets/sfx/correct.wav');
+const wrongAudio = new Audio('assets/sfx/incorrect.wav');
 
 const checkAnswer = function (userClick) {
     
@@ -59,10 +61,11 @@ const checkAnswer = function (userClick) {
 
     if (userClick === currentQuestion.correctAns) {
         displayFeedback('Correct Answer!✅');
+        correctAudio.play();
         
     } else {
         displayFeedback('Wrong Answer ❌');
-        
+        wrongAudio.play();
         timeLeft -= 15;
         timeLeft = Math.max(0, timeLeft); //if user gets all wrong to prevent timer displaying negative
     }
@@ -73,7 +76,7 @@ const checkAnswer = function (userClick) {
         questionChoices.textContent = '';
         questionDisplay();
       } else {
-        setTimeout(endQuiz, 800); // added delay so that feedback for the last question is visible to the user
+        setTimeout(endQuiz, 400); // added delay so that feedback for the last question is visible to the user
       }
 
 };
