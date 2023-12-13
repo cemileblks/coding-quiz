@@ -8,12 +8,15 @@ This project is aimed to test your knowledge on  basic JavaScript concepts throu
 ## Usage
 
 The image below shows the start page when the console is opened:
+
 ![Start Page](/assets/images/start.png)
 
 Here is a sample question once the quiz starts:
+
 ![Sample Question](/assets/images/start.png)
 
 Finally the end page to submit your results to view the highscores:
+
 ![End of Quiz](/assets/images/endpage.png)
 
 Sample highscores page:
